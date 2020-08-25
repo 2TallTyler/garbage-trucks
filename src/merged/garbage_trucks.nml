@@ -1,0 +1,151 @@
+// Begin Header
+
+grf {
+	grfid: "TT\11\01";
+	name: string(STR_GRF_NAME);
+	desc: string(STR_GRF_DESC);
+	version: 0;
+	min_compatible_version: 0;
+	
+	param 0 {
+		param_resolution {
+			name: string(STR_PARAM_NAME_RESOLUTION);
+			desc: string(STR_PARAM_DESC_RESOLUTION);
+			type: int;
+			min_value: 0;
+			max_value: 2;
+			def_value: 0;
+			names:	{
+				0:	string(STR_RESOLUTION_1);
+				1:	string(STR_RESOLUTION_2);
+				2:	string(STR_RESOLUTION_4);
+			};
+		}
+	}
+}
+
+cargotable {
+	WSTE
+}
+
+// End Header
+// Begin Sprite Templates
+
+template template_1x_truck(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+    [ x,		y,		9,		30,		-4,			-20,	ANIM]
+    [ x+17,		y,		26,		27,		-13,		-16,	ANIM]
+    [ x+51,		y,		33,		19,		-13,		-14,	ANIM]
+    [ x+92,		y,		26,		27,		-13,		-17,	ANIM]
+    [ x+126,	y,		9,		30,		-4,			-20,	ANIM]
+    [ x+143,	y,		26,		24,		-14,		-16,	ANIM]
+    [ x+177,	y,		33,		19,		-16,		-14,	ANIM]
+    [ x+218,	y,		26,		24,		-13,		-17,	ANIM]
+}
+
+template template_2x_truck(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+    [ x,		y,		18,		60,		-8,			-40,	ANIM]
+    [ x+34,		y,		52,		54,		-26,		-32,	ANIM]
+    [ x+102,	y,		66,		38,		-26,		-28,	ANIM]
+    [ x+184,	y,		52,		54,		-26,		-34,	ANIM]
+    [ x+252,	y,		18,		60,		-8,			-40,	ANIM]
+    [ x+286,	y,		52,		48,		-28,		-32,	ANIM]
+    [ x+354,	y,		66,		38,		-32,		-28,	ANIM]
+    [ x+436,	y,		52,		48,		-26,		-34,	ANIM]
+}
+
+template template_4x_truck(x, y) {
+    //left_x, upper_y, width, height, offset_x, offset_y
+    [ x,		y,		36,		120,	-16,		-80,	ANIM]
+    [ x+68,		y,		104,	108,	-52,		-64,	ANIM]
+    [ x+204,	y,		132,	76,		-52,		-56,	ANIM]
+    [ x+368,	y,		104,	108,	-52,		-68,	ANIM]
+    [ x+504,	y,		36,		120,	-16,		-80,	ANIM]
+    [ x+572,	y,		104,	96,		-56,		-64,	ANIM]
+    [ x+708,	y,		132,	76,		-64,		-56,	ANIM]
+    [ x+872,	y,		104,	96,		-52,		-68,	ANIM]
+}
+
+
+// End Sprite Templates
+// Begin Mack Model R
+
+spriteset(spriteset_mack_model_r_1, "src\gfx\mack_model_r_1x_8bpp.png") {
+    template_1x_truck(0,0)
+}
+
+spriteset(spriteset_mack_model_r_2, "src\gfx\mack_model_r_1x_8bpp.png") {
+    template_1x_truck(0,0)
+}
+
+spriteset(spriteset_mack_model_r_4, "src\gfx\mack_model_r_1x_8bpp.png") {
+    template_1x_truck(0,0)
+}
+
+alternative_sprites(spriteset_mack_model_r_2, ZOOM_LEVEL_IN_2X, BIT_DEPTH_8BPP, "src\gfx\mack_model_r_2x_8bpp.png") {
+	template_2x_truck(0,0)
+}
+
+alternative_sprites(spriteset_mack_model_r_4, ZOOM_LEVEL_IN_4X, BIT_DEPTH_8BPP, "src\gfx\mack_model_r_4x_8bpp.png") {
+	template_4x_truck(0,0)
+}
+
+spritegroup spritegroup_mack_model_r_1 {
+	loaded:		[spriteset_mack_model_r_1];
+	loading:	[spriteset_mack_model_r_1];
+}
+
+spritegroup spritegroup_mack_model_r_2 {
+	loaded:		[spriteset_mack_model_r_2];
+	loading:	[spriteset_mack_model_r_2];
+}
+
+spritegroup spritegroup_mack_model_r_4 {
+	loaded:		[spriteset_mack_model_r_4];
+	loading:	[spriteset_mack_model_r_4];
+}
+
+switch (FEAT_ROADVEHS, SELF, resolution_mack_model_r, param_resolution) {
+0: spritegroup_mack_model_r_1;
+1: spritegroup_mack_model_r_2;
+2: spritegroup_mack_model_r_4;
+}
+
+item(FEAT_ROADVEHS, item_mack_model_r) {
+	property {
+		/* Common properties */
+		name: 						string(STR_NAME_MACK_MODEL_R);
+		climates_available: 		ALL_CLIMATES;
+		introduction_date:			date(1966,01,01);
+		model_life:					40; // available until 2005
+		vehicle_life:				12;
+		reliability_decay:			15;
+		cargo_allow_refit:			[WSTE];
+		loading_speed:				5;
+		cost_factor:				65;
+		running_cost_factor:		60;
+		
+		/* Road vehicle-specific porperties */
+		sprite_id:					SPRITE_ID_NEW_ROADVEH; //enable new graphics
+		speed:						40 mph;
+		misc_flags:					bitmask(ROADVEH_FLAG_2CC);
+        refit_cost:					0;
+		running_cost_base:			RUNNING_COST_ROADVEH;
+		
+		power:						154 hp;
+		weight:						17 ton;
+				
+		cargo_capacity:				20;
+		
+		sound_effect:				SOUND_TRUCK_START_2;
+		visual_effect:				visual_effect(VISUAL_EFFECT_DIESEL, -1);
+		
+		length:						7;
+	}
+	graphics {
+		default: 					resolution_mack_model_r;
+	}
+}
+
+// End Mack Model R

@@ -1,0 +1,80 @@
+// Begin Mack Model R
+
+spriteset(spriteset_mack_model_r_1, "src\gfx\mack_model_r_1x_8bpp.png") {
+    template_1x_truck(0,0)
+}
+
+spriteset(spriteset_mack_model_r_2, "src\gfx\mack_model_r_1x_8bpp.png") {
+    template_1x_truck(0,0)
+}
+
+spriteset(spriteset_mack_model_r_4, "src\gfx\mack_model_r_1x_8bpp.png") {
+    template_1x_truck(0,0)
+}
+
+alternative_sprites(spriteset_mack_model_r_2, ZOOM_LEVEL_IN_2X, BIT_DEPTH_8BPP, "src\gfx\mack_model_r_2x_8bpp.png") {
+	template_2x_truck(0,0)
+}
+
+alternative_sprites(spriteset_mack_model_r_4, ZOOM_LEVEL_IN_4X, BIT_DEPTH_8BPP, "src\gfx\mack_model_r_4x_8bpp.png") {
+	template_4x_truck(0,0)
+}
+
+spritegroup spritegroup_mack_model_r_1 {
+	loaded:		[spriteset_mack_model_r_1];
+	loading:	[spriteset_mack_model_r_1];
+}
+
+spritegroup spritegroup_mack_model_r_2 {
+	loaded:		[spriteset_mack_model_r_2];
+	loading:	[spriteset_mack_model_r_2];
+}
+
+spritegroup spritegroup_mack_model_r_4 {
+	loaded:		[spriteset_mack_model_r_4];
+	loading:	[spriteset_mack_model_r_4];
+}
+
+switch (FEAT_ROADVEHS, SELF, resolution_mack_model_r, param_resolution) {
+0: spritegroup_mack_model_r_1;
+1: spritegroup_mack_model_r_2;
+2: spritegroup_mack_model_r_4;
+}
+
+item(FEAT_ROADVEHS, item_mack_model_r) {
+	property {
+		/* Common properties */
+		name: 						string(STR_NAME_MACK_MODEL_R);
+		climates_available: 		ALL_CLIMATES;
+		introduction_date:			date(1966,01,01);
+		model_life:					40; // available until 2005
+		vehicle_life:				12;
+		reliability_decay:			15;
+		cargo_allow_refit:			[WSTE];
+		loading_speed:				5;
+		cost_factor:				65;
+		running_cost_factor:		60;
+		
+		/* Road vehicle-specific porperties */
+		sprite_id:					SPRITE_ID_NEW_ROADVEH; //enable new graphics
+		speed:						40 mph;
+		misc_flags:					bitmask(ROADVEH_FLAG_2CC);
+        refit_cost:					0;
+		running_cost_base:			RUNNING_COST_ROADVEH;
+		
+		power:						154 hp;
+		weight:						17 ton;
+				
+		cargo_capacity:				20;
+		
+		sound_effect:				SOUND_TRUCK_START_2;
+		visual_effect:				visual_effect(VISUAL_EFFECT_DIESEL, -1);
+		
+		length:						7;
+	}
+	graphics {
+		default: 					resolution_mack_model_r;
+	}
+}
+
+// End Mack Model R

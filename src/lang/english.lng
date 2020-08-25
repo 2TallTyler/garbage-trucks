@@ -1,0 +1,13 @@
+##grflangid 0x01
+
+STR_GRF_NAME						:{TITLE} {VERSION}
+STR_GRF_DESC						:{ORANGE}What has six wheels and flies? A garbage truck!
+
+STR_PARAM_NAME_RESOLUTION			:Graphics resolution
+STR_PARAM_DESC_RESOLUTION			:Choose the zoom level of the vehicles. Default TTD scale is 1x zoom.
+
+STR_RESOLUTION_1					:1x regular zoom
+STR_RESOLUTION_2					:2x extrazoom
+STR_RESOLUTION_4					:4x extrazoom
+
+STR_NAME_MACK_MODEL_R				:Mack Model R garbage truck
